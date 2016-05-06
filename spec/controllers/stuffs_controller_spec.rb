@@ -23,13 +23,17 @@ RSpec.describe StuffsController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Stuff. As you add validations to Stuff, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) do
+    {
+      name: 'Tinta'
+    }
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    {
+      name: ''
+    }
+  end 
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -90,7 +94,7 @@ RSpec.describe StuffsController, type: :controller do
     context "with invalid params" do
       it "assigns a newly created but unsaved stuff as @stuff" do
         post :create, {:stuff => invalid_attributes}, valid_session
-        expect(assigns(:stuff)).to be_a_new(Stuff)
+        expect(assigns(:stuff)).to be_a_new (Stuff)
       end
 
       it "re-renders the 'new' template" do
@@ -102,15 +106,15 @@ RSpec.describe StuffsController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) do
+        { name: 'Cartucho de tinta' }
+      end
 
       it "updates the requested stuff" do
         stuff = Stuff.create! valid_attributes
         put :update, {:id => stuff.to_param, :stuff => new_attributes}, valid_session
         stuff.reload
-        skip("Add assertions for updated state")
+        expect(stuff.name).to eq('Cartucho de tinta')
       end
 
       it "assigns the requested stuff as @stuff" do
@@ -154,6 +158,22 @@ RSpec.describe StuffsController, type: :controller do
       delete :destroy, {:id => stuff.to_param}, valid_session
       expect(response).to redirect_to(stuffs_url)
     end
+
+    it "doesnt destroy a stuff with an entry" do
+      stuff = Stuff.create! valid_attributes
+      Entry.create!(amount: 10, stuff: stuff)
+      expect {
+        delete :destroy, {:id => stuff.to_param}, valid_session
+      }.to change(Stuff, :count).by(0)
+    end
+
+    it "doesnt destroy a stuff with an departure" do
+      stuff = Stuff.create! valid_attributes
+      Departure.create!(amount: 10, stuff: stuff)
+      expect {
+        delete :destroy, {:id => stuff.to_param}, valid_session
+      }.to change(Stuff, :count).by(0)
+    end    
   end
 
 end

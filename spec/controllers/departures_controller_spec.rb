@@ -23,13 +23,14 @@ RSpec.describe DeparturesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Departure. As you add validations to Departure, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:monitor) { Stuff.create!(name: 'Monitor') }
+  let(:valid_attributes) do
+    {stuff_id: monitor.id, amount: 50}
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    {stuff_id: monitor.id, amount: ''}
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -102,15 +103,15 @@ RSpec.describe DeparturesController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) do
+        { amount: 50 }
+      end
 
       it "updates the requested departure" do
         departure = Departure.create! valid_attributes
         put :update, {:id => departure.to_param, :departure => new_attributes}, valid_session
         departure.reload
-        skip("Add assertions for updated state")
+        expect(departure.amount).to eq(50)
       end
 
       it "assigns the requested departure as @departure" do

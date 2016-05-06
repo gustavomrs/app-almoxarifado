@@ -23,13 +23,14 @@ RSpec.describe EntriesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Entry. As you add validations to Entry, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let!(:cadeira) { Stuff.create!(name: 'Cadeira') }
+  let(:valid_attributes) do
+    { stuff_id: cadeira.id, amount: 30 }
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) do
+    { stuff_id: cadeira.id, amount: '' }
+  end 
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -102,15 +103,15 @@ RSpec.describe EntriesController, type: :controller do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) do
+        { amount: 10 }
+      end
 
       it "updates the requested entry" do
         entry = Entry.create! valid_attributes
         put :update, {:id => entry.to_param, :entry => new_attributes}, valid_session
         entry.reload
-        skip("Add assertions for updated state")
+        expect(entry.amount).to eq(10)
       end
 
       it "assigns the requested entry as @entry" do
