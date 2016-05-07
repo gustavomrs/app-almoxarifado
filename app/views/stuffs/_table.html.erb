@@ -1,0 +1,34 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Quantidade</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <div id="#stuffs-table">
+      <% @stuffs.each do |stuff| %>
+        <tr>
+          <td><%= stuff.name %></td>
+          <td><%= stuff.amount %></td>
+          <td>
+            <%= link_to '<i class="fa fa-arrow-circle-up" aria-hidden="true"></i> Entrada'.html_safe, new_entry_path(stuff_id: stuff.id),
+                        {:remote => true, 
+                          'data-toggle' => "modal", 'data-target' => '#new_entry_modal', class: 'btn btn-info btn-md'}  %>
+            <%= link_to '<i class="fa fa-arrow-circle-down" aria-hidden="true"></i> Retirada'.html_safe, new_departure_path(stuff_id: stuff.id),
+                        {:remote => true, 
+                          'data-toggle' => "modal", 'data-target' => '#new_departure_modal', class: 'btn btn-warning btn-md'}  %>
+            <%= link_to "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> ".html_safe.concat(t('.edit', :default => t("helpers.links.edit"))),
+                        edit_stuff_path(stuff), :class => 'btn btn-default btn-md' %>
+            <%= link_to "<i class='fa fa-trash' aria-hidden='true'></i> ".html_safe.concat(t('.destroy', :default => t("helpers.links.destroy"))),
+                        stuff_path(stuff),
+                        :method => :delete,
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                        :class => 'btn btn-md btn-danger' %>
+          </td>
+        </tr>
+      <% end %>      
+    </div>
+  </tbody>
+</table>

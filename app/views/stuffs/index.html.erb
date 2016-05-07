@@ -1,27 +1,47 @@
-<p id="notice"><%= notice %></p>
+<%- model_class = Stuff -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<div id="stuffs-table">
+  <%= render 'table', stuffs: @stuffs %>
+</div>
+<%= modal_dialog id: "modal",
+         header: { show_close: true, dismiss: 'modal', title: 'Entrada' },
+         body:   { content: 'form' },
+         footer: { content: content_tag(:button, 'Save', class: 'btn') } %>
 
-<h1>Listing Stuffs</h1>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_stuff_path,
+            :class => 'btn btn-primary' %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="modal fade" id="new_entry_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="nome_entrada" align="center">Entrada</h4>
+      </div>
+      <div id="entry_form" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-  <tbody>
-    <% @stuffs.each do |stuff| %>
-      <tr>
-        <td><%= stuff.name %></td>
-        <td><%= link_to 'Show', stuff %></td>
-        <td><%= link_to 'Edit', edit_stuff_path(stuff) %></td>
-        <td><%= link_to 'Destroy', stuff, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Stuff', new_stuff_path %>
+<div class="modal fade" id="new_departure_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="nome_entrada" align="center">Retirada</h4>
+      </div>
+      <div id="departure_form" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

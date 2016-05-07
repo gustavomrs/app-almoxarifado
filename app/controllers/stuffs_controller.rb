@@ -6,6 +6,7 @@ class StuffsController < ApplicationController
   # GET /stuffs.json
   def index
     @stuffs = Stuff.all
+    @entry = Entry.new(amount: 10)
   end
 
   # GET /stuffs/1
@@ -29,7 +30,7 @@ class StuffsController < ApplicationController
 
     respond_to do |format|
       if @stuff.save
-        format.html { redirect_to @stuff, notice: 'Stuff was successfully created.' }
+        format.html { redirect_to @stuff, notice: 'Material criado com sucesso!' }
         format.json { render :show, status: :created, location: @stuff }
       else
         format.html { render :new }
@@ -43,7 +44,7 @@ class StuffsController < ApplicationController
   def update
     respond_to do |format|
       if @stuff.update(stuff_params)
-        format.html { redirect_to @stuff, notice: 'Stuff was successfully updated.' }
+        format.html { redirect_to @stuff, notice: 'Material atualizado com sucesso!' }
         format.json { render :show, status: :ok, location: @stuff }
       else
         format.html { render :edit }
@@ -57,7 +58,7 @@ class StuffsController < ApplicationController
   def destroy
     @stuff.destroy
     respond_to do |format|
-      format.html { redirect_to stuffs_url, notice: 'Stuff was successfully destroyed.' }
+      format.html { redirect_to stuffs_url, notice: 'Material removido com sucesso' }
       format.json { head :no_content }
     end
   end

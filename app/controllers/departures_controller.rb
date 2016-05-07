@@ -16,6 +16,10 @@ class DeparturesController < ApplicationController
   # GET /departures/new
   def new
     @departure = Departure.new
+    @stuff = Stuff.find(params[:stuff_id])
+    respond_to do |format|
+      format.js
+    end
   end
 
   # GET /departures/1/edit
@@ -29,11 +33,13 @@ class DeparturesController < ApplicationController
 
     respond_to do |format|
       if @departure.save
-        format.html { redirect_to @departure, notice: 'Departure was successfully created.' }
+        format.html { redirect_to @departure, notice: 'Saida criada com sucesso!' }
         format.json { render :show, status: :created, location: @departure }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @departure.errors, status: :unprocessable_entity }
+        format.js { render json: @departure.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,7 +49,7 @@ class DeparturesController < ApplicationController
   def update
     respond_to do |format|
       if @departure.update(departure_params)
-        format.html { redirect_to @departure, notice: 'Departure was successfully updated.' }
+        format.html { redirect_to @departure, notice: 'Saida atualizada com sucesso!' }
         format.json { render :show, status: :ok, location: @departure }
       else
         format.html { render :edit }
@@ -57,7 +63,7 @@ class DeparturesController < ApplicationController
   def destroy
     @departure.destroy
     respond_to do |format|
-      format.html { redirect_to departures_url, notice: 'Departure was successfully destroyed.' }
+      format.html { redirect_to departures_url, notice: 'Saida removida com sucesso!' }
       format.json { head :no_content }
     end
   end

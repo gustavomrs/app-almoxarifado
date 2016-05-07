@@ -1,25 +1,28 @@
-<%= form_for(@departure) do |f| %>
+<%= form_for(@departure, remote: true, html: {role: :form, 'data-model' => 'departure'}) do |f| %>
+
   <% if @departure.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@departure.errors.count, "error") %> prohibited this departure from being saved:</h2>
 
       <ul>
-      <% @departure.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+      <% @departure.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :amount %><br>
-    <%= f.number_field :amount %>
+  <%# Added Bootstrap classes, and help-block container for error messages %>
+  <div class="form-group">
+    <h4>Item: <%= @stuff.name %></h4>
+    <%= f.hidden_field :stuff_id, :value => @stuff.id %>
+    <%= f.label :amount, class:   'control-label' %><br>
+    <%= f.number_field :amount, class: 'form-control' %>
+    <span class="help-block"></span>
   </div>
-  <div class="field">
-    <%= f.label :stuff_id %><br>
-    <%= f.text_field :stuff_id %>
-  </div>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit 'Finalizar', class: 'btn btn-primary' %>
   </div>
+
 <% end %>

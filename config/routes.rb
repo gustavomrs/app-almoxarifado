@@ -4,7 +4,12 @@ Rails.application.routes.draw do
   resources :entries
   resources :stuffs
   resources :users
-  root to: "home#index"
+  root to: 'home#index'
+  devise_scope :user do
+    get 'sign_in', to: 'devise/sessions#new'
+    get 'sign_out', to: 'devise/sessions#destroy'
+  end
+  # get "entries/new" => 'entries#new', :as => :new_entry
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
