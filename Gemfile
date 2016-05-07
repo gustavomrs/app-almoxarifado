@@ -27,6 +27,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem "audited-activerecord", "~> 4.0"
 
+gem "twitter-bootstrap-rails"
+gem 'devise'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

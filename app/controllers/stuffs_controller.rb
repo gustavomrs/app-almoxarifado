@@ -1,4 +1,5 @@
 class StuffsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_stuff, only: [:show, :edit, :update, :destroy]
 
   # GET /stuffs

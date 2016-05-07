@@ -1,4 +1,5 @@
 class DeparturesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_departure, only: [:show, :edit, :update, :destroy]
 
   # GET /departures
