@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
-  resources :departures
-  resources :entries
+  devise_for :users, except: [:destroy]
+  resources :departures, except: [:destroy, :update]
+  resources :entries, except: [:destroy, :update]
   resources :stuffs
   resources :users
   root to: 'home#index'

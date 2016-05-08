@@ -33,7 +33,7 @@ class EntriesController < ApplicationController
 
     respond_to do |format|
       if @entry.save
-        @stuffs = Stuff.all
+        @stuffs = Stuff.ordered
         format.html { redirect_to entries_url, notice: 'Entrada criada com sucesso!' }
         format.json { render :show, status: :created, location: @entry }
         format.js

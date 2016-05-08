@@ -1,0 +1,5 @@
+<% unless @departure.errors.any? %>
+	$('#stuffs-table').html("<%= raw escape_javascript(render(partial: 'stuffs/table', departure: @departure)) %>");
+	$('#new_departure_modal').modal('hide');
+<% end %>
+

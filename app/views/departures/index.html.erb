@@ -1,29 +1,26 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Departures</h1>
-
-<table>
+<%- model_class = Departure -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Amount</th>
-      <th>Stuff</th>
-      <th colspan="3"></th>
+      <th><%= model_class.human_attribute_name(:responsible) %></th>
+      <th><%= model_class.human_attribute_name(:stuff) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @departures.each do |departure| %>
       <tr>
+        <td><%= departure.audits.first.user.login %></td>
+        <td><%= departure.stuff.name %></td>
         <td><%= departure.amount %></td>
-        <td><%= departure.stuff %></td>
-        <td><%= link_to 'Show', departure %></td>
-        <td><%= link_to 'Edit', edit_departure_path(departure) %></td>
-        <td><%= link_to 'Destroy', departure, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Departure', new_departure_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_departure_path,
+            :class => 'btn btn-primary' %>

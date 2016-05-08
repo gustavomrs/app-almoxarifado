@@ -5,7 +5,7 @@ class DeparturesController < ApplicationController
   # GET /departures
   # GET /departures.json
   def index
-    @departures = Departure.all
+    @departures = Departure.ordered
   end
 
   # GET /departures/1
@@ -33,13 +33,13 @@ class DeparturesController < ApplicationController
 
     respond_to do |format|
       if @departure.save
+        @stuffs = Stuff.ordered
         format.html { redirect_to @departure, notice: 'Saida criada com sucesso!' }
         format.json { render :show, status: :created, location: @departure }
         format.js
       else
-        format.html { render :new }
-        format.json { render json: @departure.errors, status: :unprocessable_entity }
-        format.js { render json: @departure.errors, status: :unprocessable_entity }
+        @stuff = Stuff.find(params["departure"]["stuff_id"])
+        format.js { render :new }
       end
     end
   end

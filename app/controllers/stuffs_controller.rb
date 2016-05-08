@@ -56,10 +56,13 @@ class StuffsController < ApplicationController
   # DELETE /stuffs/1
   # DELETE /stuffs/1.json
   def destroy
-    @stuff.destroy
-    respond_to do |format|
-      format.html { redirect_to stuffs_url, notice: 'Material removido com sucesso' }
-      format.json { head :no_content }
+    if @stuff.destroy
+      respond_to do |format|
+        format.html { redirect_to stuffs_url, notice: 'Material removido com sucesso' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to stuffs_path, flash: { error: @stuff.errors.full_messages }
     end
   end
 

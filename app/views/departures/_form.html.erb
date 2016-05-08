@@ -1,9 +1,7 @@
 <%= form_for(@departure, remote: true, html: {role: :form, 'data-model' => 'departure'}) do |f| %>
 
   <% if @departure.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@departure.errors.count, "error") %> prohibited this departure from being saved:</h2>
-
+    <div class="alert alert-danger">
       <ul>
       <% @departure.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
