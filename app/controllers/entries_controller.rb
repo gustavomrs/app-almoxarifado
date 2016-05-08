@@ -1,6 +1,5 @@
 class EntriesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   # GET /entries
   # GET /entries.json
@@ -22,9 +21,6 @@ class EntriesController < ApplicationController
     end
   end
 
-  # GET /entries/1/edit
-  def edit
-  end
 
   # POST /entries
   # POST /entries.json
@@ -37,46 +33,13 @@ class EntriesController < ApplicationController
         format.html { redirect_to entries_url, notice: 'Entrada criada com sucesso!' }
         format.json { render :show, status: :created, location: @entry }
         format.js
-      else
-        format.html { render :new }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
-        format.js { render json: @entry.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PATCH/PUT /entries/1
-  # PATCH/PUT /entries/1.json
-  def update
-    respond_to do |format|
-      if @entry.update(entry_params)
-        format.html { redirect_to @entry, notice: 'Entrada atualizada com sucesso!' }
-        format.json { render :show, status: :ok, location: @entry }
-      else
-        format.html { render :edit }
-        format.json { render json: @entry.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /entries/1
-  # DELETE /entries/1.json
-  def destroy
-    @entry.destroy
-    respond_to do |format|
-      format.html { redirect_to entries_url, notice: 'Entrada removida com sucesso!' }
-      format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_entry
-      @entry = Entry.find(params[:id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def entry_params
-      params.require(:entry).permit(:amount, :stuff_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def entry_params
+    params.require(:entry).permit(:amount, :stuff_id)
+  end
 end

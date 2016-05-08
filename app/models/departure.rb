@@ -21,10 +21,4 @@ class Departure < ActiveRecord::Base
       errors.add(:amount, "para retirada permitida: #{stuff.amount}")
     end
   end
-
-  def self.valid_horary?
-    initial_horary = DateTime.now.change({ hour: 12, min: 0, sec: 0 })
-    final_horary = DateTime.now.change({ hour: 18, min: 0, sec: 0 })
-    DateTime.now.between?(initial_horary, final_horary)
-  end
 end
