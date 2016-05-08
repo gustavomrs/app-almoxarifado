@@ -7,6 +7,7 @@
     </tr>
   </thead>
   <tbody>
+    <div class="alert alert-warning"> Horário permitido para retirada: 09h às 18h</div>
     <div id="#stuffs-table">
       <% @stuffs.each do |stuff| %>
         <tr>
@@ -18,7 +19,7 @@
                           'data-toggle' => "modal", 'data-target' => '#new_entry_modal', class: 'btn btn-info btn-md'}  %>
             <%= link_to '<i class="fa fa-arrow-circle-down" aria-hidden="true"></i> Retirada'.html_safe, new_departure_path(stuff_id: stuff.id),
                         {:remote => true,
-                          'data-toggle' => "modal", 'data-target' => '#new_departure_modal', class: 'btn btn-warning btn-md'}  %>
+                          'data-toggle' => "modal", 'data-target' => '#new_departure_modal', class: 'btn btn-warning btn-md'} %>
             <%= link_to "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> ".html_safe.concat(t('.edit', :default => t("helpers.links.edit"))),
                         edit_stuff_path(stuff), :class => 'btn btn-default btn-md' %>
             <%= link_to "<i class='fa fa-trash' aria-hidden='true'></i> ".html_safe.concat(t('.destroy', :default => t("helpers.links.destroy"))),

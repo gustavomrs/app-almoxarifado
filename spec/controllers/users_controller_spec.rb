@@ -19,6 +19,10 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe UsersController, type: :controller do
+  before(:each) do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in User.create(login: 'admin', password: 'admin123') # Using factory girl as an example
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # User. As you add validations to User, be sure to
@@ -33,7 +37,7 @@ RSpec.describe UsersController, type: :controller do
   let(:invalid_attributes) do
     {
       login: '',
-      password: '456321'    
+      password: '456321'
     }
   end
 
@@ -46,7 +50,7 @@ RSpec.describe UsersController, type: :controller do
     it "assigns all users as @users" do
       user = User.create! valid_attributes
       get :index, {}, valid_session
-      expect(assigns(:users)).to eq([user])
+      expect(assigns(:users).last).to eq(user)
     end
   end
 
@@ -109,7 +113,7 @@ RSpec.describe UsersController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) do
-        { login: 'newlogin' }
+        { login: 'newlogin', password: 'newpass' }
       end
 
       it "updates the requested user" do
@@ -146,20 +150,4 @@ RSpec.describe UsersController, type: :controller do
       end
     end
   end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested user" do
-      user = User.create! valid_attributes
-      expect {
-        delete :destroy, {:id => user.to_param}, valid_session
-      }.to change(User, :count).by(-1)
-    end
-
-    it "redirects to the users list" do
-      user = User.create! valid_attributes
-      delete :destroy, {:id => user.to_param}, valid_session
-      expect(response).to redirect_to(users_url)
-    end
-  end
-
 end

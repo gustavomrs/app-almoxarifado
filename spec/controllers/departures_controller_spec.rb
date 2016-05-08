@@ -19,13 +19,16 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe DeparturesController, type: :controller do
-
+  before(:each) do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in User.create(login: 'admin', password: 'admin123') # Using factory girl as an example
+  end
   # This should return the minimal set of attributes required to create a valid
   # Departure. As you add validations to Departure, be sure to
   # adjust the attributes here as well.
-  let(:monitor) { Stuff.create!(name: 'Monitor') }
+  let(:monitor) { Stuff.create!(name: 'Monitor', amount: 50) }
   let(:valid_attributes) do
-    {stuff_id: monitor.id, amount: 50}
+    {stuff_id: monitor.id, amount: 10}
   end
 
   let(:invalid_attributes) do
@@ -45,29 +48,6 @@ RSpec.describe DeparturesController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested departure as @departure" do
-      departure = Departure.create! valid_attributes
-      get :show, {:id => departure.to_param}, valid_session
-      expect(assigns(:departure)).to eq(departure)
-    end
-  end
-
-  describe "GET #new" do
-    it "assigns a new departure as @departure" do
-      get :new, {}, valid_session
-      expect(assigns(:departure)).to be_a_new(Departure)
-    end
-  end
-
-  describe "GET #edit" do
-    it "assigns the requested departure as @departure" do
-      departure = Departure.create! valid_attributes
-      get :edit, {:id => departure.to_param}, valid_session
-      expect(assigns(:departure)).to eq(departure)
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Departure" do
@@ -81,79 +61,14 @@ RSpec.describe DeparturesController, type: :controller do
         expect(assigns(:departure)).to be_a(Departure)
         expect(assigns(:departure)).to be_persisted
       end
-
-      it "redirects to the created departure" do
-        post :create, {:departure => valid_attributes}, valid_session
-        expect(response).to redirect_to(Departure.last)
-      end
     end
 
     context "with invalid params" do
-      it "assigns a newly created but unsaved departure as @departure" do
-        post :create, {:departure => invalid_attributes}, valid_session
-        expect(assigns(:departure)).to be_a_new(Departure)
+      it "insufficient amount for departure" do
+        expect {
+          post :create, {:departure => valid_attributes}, valid_session
+        }.to change(Departure, :count).by(1)
       end
-
-      it "re-renders the 'new' template" do
-        post :create, {:departure => invalid_attributes}, valid_session
-        expect(response).to render_template("new")
-      end
-    end
-  end
-
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) do
-        { amount: 50 }
-      end
-
-      it "updates the requested departure" do
-        departure = Departure.create! valid_attributes
-        put :update, {:id => departure.to_param, :departure => new_attributes}, valid_session
-        departure.reload
-        expect(departure.amount).to eq(50)
-      end
-
-      it "assigns the requested departure as @departure" do
-        departure = Departure.create! valid_attributes
-        put :update, {:id => departure.to_param, :departure => valid_attributes}, valid_session
-        expect(assigns(:departure)).to eq(departure)
-      end
-
-      it "redirects to the departure" do
-        departure = Departure.create! valid_attributes
-        put :update, {:id => departure.to_param, :departure => valid_attributes}, valid_session
-        expect(response).to redirect_to(departure)
-      end
-    end
-
-    context "with invalid params" do
-      it "assigns the departure as @departure" do
-        departure = Departure.create! valid_attributes
-        put :update, {:id => departure.to_param, :departure => invalid_attributes}, valid_session
-        expect(assigns(:departure)).to eq(departure)
-      end
-
-      it "re-renders the 'edit' template" do
-        departure = Departure.create! valid_attributes
-        put :update, {:id => departure.to_param, :departure => invalid_attributes}, valid_session
-        expect(response).to render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested departure" do
-      departure = Departure.create! valid_attributes
-      expect {
-        delete :destroy, {:id => departure.to_param}, valid_session
-      }.to change(Departure, :count).by(-1)
-    end
-
-    it "redirects to the departures list" do
-      departure = Departure.create! valid_attributes
-      delete :destroy, {:id => departure.to_param}, valid_session
-      expect(response).to redirect_to(departures_url)
     end
   end
 

@@ -6,7 +6,6 @@ class StuffsController < ApplicationController
   # GET /stuffs.json
   def index
     @stuffs = Stuff.all
-    @entry = Entry.new(amount: 10)
   end
 
   # GET /stuffs/1

@@ -19,13 +19,16 @@ require 'rails_helper'
 # that an instance is receiving a specific message.
 
 RSpec.describe StuffsController, type: :controller do
-
+  before(:each) do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_in User.create(login: 'admin', password: 'admin123') # Using factory girl as an example
+  end
   # This should return the minimal set of attributes required to create a valid
   # Stuff. As you add validations to Stuff, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
     {
-      name: 'Tinta'
+      name: 'Tinta', amount: 30
     }
   end
 
@@ -33,7 +36,7 @@ RSpec.describe StuffsController, type: :controller do
     {
       name: ''
     }
-  end 
+  end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
@@ -173,7 +176,15 @@ RSpec.describe StuffsController, type: :controller do
       expect {
         delete :destroy, {:id => stuff.to_param}, valid_session
       }.to change(Stuff, :count).by(0)
-    end    
+    end
+
+    it "doesnt destroy a stuff with an departure" do
+      stuff = Stuff.create! valid_attributes
+      Entry.create!(amount: 10, stuff: stuff)
+      expect {
+        delete :destroy, {:id => stuff.to_param}, valid_session
+      }.to change(Stuff, :count).by(0)
+    end
   end
 
 end

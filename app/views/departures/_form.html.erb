@@ -1,5 +1,5 @@
 <%= form_for(@departure, remote: true, html: {role: :form, 'data-model' => 'departure'}) do |f| %>
-
+  <div class="alert alert-warning"> Horário permitido para retirada: 09h às 18h</div>
   <% if @departure.errors.any? %>
     <div class="alert alert-danger">
       <ul>

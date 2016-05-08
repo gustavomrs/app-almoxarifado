@@ -39,6 +39,7 @@ pt-BR:
         amount: Quantidade
         responsible: Responsável
         stuff: Material
+        created_at: Horário
     errors:
       messages:
         record_invalid: 'A validação falhou: %{errors}'
