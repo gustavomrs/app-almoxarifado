@@ -17,6 +17,11 @@ RSpec.describe Departure, type: :model do
     allow(DateTime).to receive(:now) { now }
   end
 
+  let(:invalid_day) do
+    now = DateTime.parse("08/05/2016 14:00:00")
+    allow(DateTime).to receive(:now) { now }
+  end
+
   describe 'relationships' do
     it { should belong_to(:stuff) }
   end
@@ -50,11 +55,18 @@ RSpec.describe Departure, type: :model do
     expect(mouse_departure).to_not be_valid
   end
 
-  it 'invalid departure with before invalid horary' do
+  it 'invalid departure with after invalid horary' do
     invalid_after_horary
     mouse = Stuff.create!(name: 'Mouse', amount: 20)
     mouse_departure = Departure.new(stuff: mouse, amount: 10)
 
+    expect(mouse_departure).to_not be_valid
+  end
+
+  it 'departure with valid hour but invalid day' do
+    invalid_day
+    mouse = Stuff.create!(name: 'Mouse', amount: 20)
+    mouse_departure = Departure.new(stuff: mouse, amount: 10)
     expect(mouse_departure).to_not be_valid
   end
 

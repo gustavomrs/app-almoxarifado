@@ -5,7 +5,7 @@ class Departure < ActiveRecord::Base
 
   validates :stuff_id, :amount, presence: true
   validate :amount_enough_to_departure?
-  validates :created_at, horary: true # => custom validator at validator/horary_validator.rb
+  validates :created_at, horary_day: true # => custom validator at validator/horary_day_validator.rb
 
   after_save :update_stuff_amount
 
