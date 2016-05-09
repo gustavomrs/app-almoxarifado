@@ -22,6 +22,9 @@
                           'data-toggle' => "modal", 'data-target' => '#new_departure_modal', class: 'btn btn-warning btn-md'} %>
             <%= link_to "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> ".html_safe.concat(t('.edit', :default => t("helpers.links.edit"))),
                         edit_stuff_path(stuff), :class => 'btn btn-default btn-md' %>
+            <%= link_to '<i class="fa fa-bar-chart" aria-hidden="true"></i> Log de Entradas/Retiradas'.html_safe, stuff_log_path(stuff_id: stuff.id),
+                        {:remote => true,
+                          'data-toggle' => "modal", 'data-target' => '#stuff_log_modal', class: 'btn btn-default btn-md'} %>
             <%= link_to "<i class='fa fa-trash' aria-hidden='true'></i> ".html_safe.concat(t('.destroy', :default => t("helpers.links.destroy"))),
                         stuff_path(stuff),
                         :method => :delete,

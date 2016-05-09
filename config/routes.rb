@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'sign_in', to: 'devise/sessions#new'
     get 'sign_out', to: 'devise/sessions#destroy'
   end
+  get 'stuff_log' => 'stuffs#log'
   # get "entries/new" => 'entries#new', :as => :new_entry
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,46 @@
+<%- model_class = Entry -%>
+<div class="alert alert-info" align="center"><strong>Entradas</strong></div>
+<table  class="table table-striped">
+    <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:responsible) %></th>
+      <th><%= model_class.human_attribute_name(:stuff) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @stuff.entries.ordered.each do |e| %>
+      <tr>
+        <td><%= e.audits.first.user.login %></td>
+        <td><%= e.stuff.name%></td>
+        <td><%= e.amount%></td>
+      </tr>
+
+  <% end %>
+  </tbody>
+</table>
+
+<%- model_class = Departure -%>
+<div class="alert alert-warning" align="center"><strong>Retiradas</strong></div>
+<table  class="table table-striped">
+    <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:responsible) %></th>
+      <th><%= model_class.human_attribute_name(:stuff) %></th>
+      <th><%= model_class.human_attribute_name(:amount) %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @stuff.departures.ordered.each do |e| %>
+      <tr>
+        <td><%= e.audits.first.user.login %></td>
+        <td><%= e.stuff.name%></td>
+        <td><%= e.amount%></td>
+      </tr>
+
+  <% end %>
+  </tbody>
+</table>
+
+
+

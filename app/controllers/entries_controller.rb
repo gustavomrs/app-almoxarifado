@@ -33,6 +33,9 @@ class EntriesController < ApplicationController
         format.html { redirect_to entries_url, notice: 'Entrada criada com sucesso!' }
         format.json { render :show, status: :created, location: @entry }
         format.js
+      else
+        @stuff = Stuff.find(params["entry"]["stuff_id"])
+        format.js { render :new }
       end
     end
   end

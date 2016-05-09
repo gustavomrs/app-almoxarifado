@@ -29,7 +29,7 @@ class StuffsController < ApplicationController
 
     respond_to do |format|
       if @stuff.save
-        format.html { redirect_to @stuff, notice: 'Material criado com sucesso!' }
+        format.html { redirect_to stuffs_path, notice: 'Material criado com sucesso!' }
         format.json { render :show, status: :created, location: @stuff }
       else
         format.html { render :new }
@@ -65,14 +65,22 @@ class StuffsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_stuff
-      @stuff = Stuff.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def stuff_params
-      params.require(:stuff).permit(:name)
+  def log
+    @stuff = Stuff.find(params[:stuff_id])
+    respond_to do |format|
+      format.js
     end
+  end
+
+  private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_stuff
+    @stuff = Stuff.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def stuff_params
+    params.require(:stuff).permit(:name)
+  end
 end

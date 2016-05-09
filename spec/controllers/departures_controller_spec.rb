@@ -32,13 +32,25 @@ RSpec.describe DeparturesController, type: :controller do
   end
 
   let(:invalid_attributes) do
-    {stuff_id: monitor.id, amount: ''}
+    {stuff_id: monitor.id, amount: 200}
+  end
+
+  let!(:valid_horary) do
+    now = DateTime.parse("05/05/2016 10:20:00")
+    allow(DateTime).to receive(:now) { now }
   end
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # DeparturesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+  describe "GET #new" do
+    it "has a 200 status code" do
+      xhr :get, :new, stuff_id: monitor.id
+      expect(response.code).to eq("200")
+    end
+  end
 
   describe "GET #index" do
     it "assigns all departures as @departures" do
@@ -61,13 +73,17 @@ RSpec.describe DeparturesController, type: :controller do
         expect(assigns(:departure)).to be_a(Departure)
         expect(assigns(:departure)).to be_persisted
       end
+
+      it "has a 200 status code" do
+        xhr :post, :create, departure: valid_attributes
+        expect(response.code).to eq("200")
+      end
     end
 
     context "with invalid params" do
-      it "insufficient amount for departure" do
-        expect {
-          post :create, {:departure => valid_attributes}, valid_session
-        }.to change(Departure, :count).by(1)
+      it "fail with invalid attributes" do
+        xhr :post, :create, departure: invalid_attributes
+        expect(assigns(:departure)).to_not be_valid
       end
     end
   end

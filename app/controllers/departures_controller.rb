@@ -24,9 +24,12 @@ class DeparturesController < ApplicationController
     respond_to do |format|
       if @departure.save
         @stuffs = Stuff.ordered
-        format.html { redirect_to @departure, notice: 'Retirada criada com sucesso!' }
-        format.json { render :show, status: :created, location: @departure }
+        format.html { redirect_to departures_url, notice: 'Entrada criada com sucesso!' }
+        format.json { render :show, status: :created, location: @entry }
         format.js
+      else
+        @stuff = Stuff.find(params["departure"]["stuff_id"])
+        format.js { render :new }
       end
     end
   end

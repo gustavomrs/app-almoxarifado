@@ -35,10 +35,23 @@ RSpec.describe EntriesController, type: :controller do
     { stuff_id: cadeira.id, amount: '' }
   end
 
+
+  let!(:valid_horary) do
+    now = DateTime.parse("05/05/2016 10:20:00")
+    allow(DateTime).to receive(:now) { now }
+  end
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # EntriesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
+
+  describe "GET #new" do
+    it "has a 200 status code" do
+      xhr :get, :new, stuff_id: cadeira.id
+      expect(response.code).to eq("200")
+    end
+  end
 
   describe "GET #index" do
     it "assigns all entries as @entries" do
@@ -56,10 +69,22 @@ RSpec.describe EntriesController, type: :controller do
         }.to change(Entry, :count).by(1)
       end
 
+      it "has a 200 status code" do
+        xhr :post, :create, entry: valid_attributes
+        expect(response.code).to eq("200")
+      end
+
       it "assigns a newly created entry as @entry" do
         post :create, {:entry => valid_attributes}, valid_session
         expect(assigns(:entry)).to be_a(Entry)
         expect(assigns(:entry)).to be_persisted
+      end
+    end
+
+    context 'invalid' do
+      it "fail with invalid attributes" do
+        xhr :post, :create, entry: invalid_attributes
+        expect(assigns(:entry)).to_not be_valid
       end
     end
   end

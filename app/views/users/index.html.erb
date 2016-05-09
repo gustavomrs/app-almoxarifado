@@ -14,7 +14,7 @@
     <% @users.each do |user| %>
       <tr>
         <td><%= user.login %></td>
-        <td><%=l user.created_at %></td>
+        <td><%= I18n.l(user.created_at.getlocal) %></td>
         <td>
           <%= link_to "<i class='fa fa-pencil-square-o' aria-hidden='true'></i> ".html_safe.concat(t('.edit', :default => t("helpers.links.edit"))),
                       edit_user_path(user), :class => 'btn btn-default btn-md' %>
