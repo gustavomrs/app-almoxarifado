@@ -22,4 +22,4 @@ Versão Rails: 4.2.6
 Cobertura de testes: 100.0%
 
 
-Qualquer dúvida ou sugestão, sinta-se à vontade para entrar em contato comigo: gustavoufms@gmail.com
+Qualquer dúvida ou sugestão, sinta-se à vontade para entrar em contato: gustavoufms@gmail.com
