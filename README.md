@@ -13,10 +13,12 @@ rails s
 acessar browser no endereço 'localhost:3000'
 ```
 
-## Detalhes técnicos:
+## Detalhes técnicos
 
 Versão Ruby: 2.2.3
+
 Versão Rails: 4.2.6
+
 Cobertura de testes: 100.0%
 
 
