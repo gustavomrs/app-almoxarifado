@@ -1,7 +1,7 @@
-== Aplicação para controle de almoxarifado.
+# Aplicação para controle de almoxarifado.
 
 
-# Instalação
+## Instalação
 
 
 ```ruby
